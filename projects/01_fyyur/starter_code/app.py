@@ -20,7 +20,15 @@ import sys
 #----------------------------------------------------------------------------#
 # App Config.
 #----------------------------------------------------------------------------#
-
+#
+# websites i used to help with this project
+# 
+# https://stackoverflow.com/questions/22275412/sqlalchemy-return-all-distinct-column-values
+# https://stackoverflow.com/questions/47027451/python-appending-to-a-list-in-a-dictionary
+# https://hackersandslackers.com/database-queries-sqlalchemy-orm/
+# 
+# 
+# 
 app = Flask(__name__)
 moment = Moment(app)
 app.config.from_object('config')
