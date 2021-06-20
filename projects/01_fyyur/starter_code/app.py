@@ -121,21 +121,23 @@ def venues():
   #       num_shows should be aggregated based on number of upcoming shows per venue.
 
   
-
+  # we get every variation of state and city
   city_state=db.session.query(Venue).distinct(Venue.state,Venue.city).all()
   format=[]
   for cs in city_state:
+    #we group the venues with the same state and city
     csvenues=db.session.query(Venue).filter_by(state=cs.state,city=cs.city).all()
     venueformat=[]
     for venue in csvenues:
       current_time=datetime.now()
+      #we get upcoming by filtering date and id
       upcoming_query=db.session.query(Show).filter(Show.venue_id == venue.id , Show.start_time > current_time).all()
       venueformat.append({
       "id": venue.id,
       "name": venue.name,
       "num_upcoming_shows":len(upcoming_query)
       })
-
+  #assemble the data
     format.append({
     "city": cs.city,
     "state": cs.state,
@@ -183,11 +185,13 @@ def search_venues():
 def show_venue(venue_id):
   # shows the venue page with the given venue_id
   # TODO: replace with real venue data from the venues table, using venue_id
+
   venue = db.session.query(Venue).get(venue_id)
   if venue is None :
     return render_template('errors/404.html')
 
   current_date=datetime.now()
+  #get each query individually 
   past_Shows=db.session.query(Show).filter(Show.venue_id==venue_id,Show.start_time < current_date).all()
   upcoming_shows=db.session.query(Show).filter(Show.venue_id==venue_id, Show.start_time > current_date).all()
   data={
@@ -208,7 +212,7 @@ def show_venue(venue_id):
     "past_shows_count": len(past_Shows),
     "upcoming_shows_count": len(upcoming_shows),
   }
-
+#assemble data going through each query
   for pshow in past_Shows:
     data["past_shows"].append({
       "artist_id": pshow.artist_id,
@@ -430,6 +434,7 @@ def edit_artist_submission(artist_id):
     artist.image_link =  request.form.get('image_link')
     artist.facebook_link  =request.form.get('facebook_link')
     artist.website  = request.form.get('website_link')
+    #the returned value from FORM is y
     artist.seeking_venue  = True if request.form.get('seeking_venue') == 'y' else False
     artist.seeking_description  = request.form.get('seeking_description')
     db.session.commit()
