@@ -177,7 +177,9 @@ def create_venue_form():
 @app.route('/venues/create', methods=['POST'])
 def create_venue_submission():
   # TODO: insert form data as a new Venue record in the db, instead
-  
+  form = VenueForm(request.form)
+  if not form.validate():
+    return render_template('forms/new_venue.html', form=form)
   error = False
   try:
     venue=Venue(
@@ -447,8 +449,11 @@ def create_artist_submission():
 
   # called upon submitting the new artist listing form
   # TODO: insert form data as a new Venue record in the db, instead
-
+  form = ArtistForm(request.form)
+  if not form.validate():
+    return render_template('forms/new_artist.html', form=form)
   error=False
+  
   try:
     artist=Artist(
       name=request.form.get('name'),

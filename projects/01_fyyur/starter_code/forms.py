@@ -4,6 +4,10 @@ from flask_wtf import Form
 from wtforms import StringField, SelectField, SelectMultipleField, DateTimeField, BooleanField
 from wtforms.validators import DataRequired, AnyOf, URL, ValidationError, length
 
+def validate_phone(form, field):
+     if not re.search(r"^[0-9]{3}-[0-9]{3}-[0-9]{4}$", field.data):
+          raise ValidationError("Invalid phone number xxx-xxx-xxxx.")  
+
 class ShowForm(Form):
     artist_id = StringField(
         'artist_id'
@@ -18,9 +22,7 @@ class ShowForm(Form):
     )
 
 class VenueForm(Form):
-    def validate_phone(form, field):
-        if not re.search(r"^[0-9]{3}-[0-9]{3}-[0-9]{4}$", field.data):
-            raise ValidationError("Invalid phone number.")    
+  
 
     name = StringField(
         'name', validators=[DataRequired()]
@@ -88,7 +90,7 @@ class VenueForm(Form):
         'address', validators=[DataRequired()]
     )
     phone = StringField(
-        'phone'
+        'phone', validators=[validate_phone]
     )
     image_link = StringField(
         'image_link'
@@ -119,7 +121,7 @@ class VenueForm(Form):
         ]
     )
     facebook_link = StringField(
-        'facebook_link', validators=[URL()]
+        'facebook_link', validators=[]
     )
     website_link = StringField(
         'website_link'
@@ -135,9 +137,6 @@ class VenueForm(Form):
 
 class ArtistForm(Form):
     
-    def validate_phone(form, field):
-        if not re.search(r"^[0-9]{3}-[0-9]{3}-[0-9]{4}$", field.data):
-            raise ValidationError("Invalid phone number.")
 
     name = StringField(
         'name', validators=[DataRequired()]
@@ -234,7 +233,7 @@ class ArtistForm(Form):
      )
     facebook_link = StringField(
         # TODO implement enum restriction
-        'facebook_link', validators=[URL()]
+        'facebook_link', validators=[]
      )
 
     website_link = StringField(
