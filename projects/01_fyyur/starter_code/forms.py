@@ -18,6 +18,10 @@ class ShowForm(Form):
     )
 
 class VenueForm(Form):
+    def validate_phone(form, field):
+        if not re.search(r"^[0-9]{3}-[0-9]{3}-[0-9]{4}$", field.data):
+            raise ValidationError("Invalid phone number.")    
+
     name = StringField(
         'name', validators=[DataRequired()]
     )
@@ -132,8 +136,8 @@ class VenueForm(Form):
 class ArtistForm(Form):
     
     def validate_phone(form, field):
-        if not re.search(r"^[0-9]*$", field.data):
-         raise ValidationError("only digits please")
+        if not re.search(r"^[0-9]{3}-[0-9]{3}-[0-9]{4}$", field.data):
+            raise ValidationError("Invalid phone number.")
 
     name = StringField(
         'name', validators=[DataRequired()]
