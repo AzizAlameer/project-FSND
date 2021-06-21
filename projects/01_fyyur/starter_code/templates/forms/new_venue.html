@@ -7,10 +7,12 @@
       <h3 class="form-heading">List a new venue <a href="{{ url_for('index') }}" title="Back to homepage"><i class="fa fa-home pull-right"></i></a></h3>
       <div class="form-group">
         <label for="name">Name</label>
+        {{ form.errors.name }}
         {{ form.name(class_ = 'form-control', autofocus = true) }}
       </div>
       <div class="form-group">
           <label>City & State</label>
+          {{ form.errors.city }}
           <div class="form-inline">
             <div class="form-group">
               {{ form.city(class_ = 'form-control', placeholder='City', autofocus = true) }}
@@ -22,14 +24,17 @@
       </div>
       <div class="form-group">
         <label for="address">Address</label>
+        {{ form.errors.address }}
         {{ form.address(class_ = 'form-control', autofocus = true) }}
       </div>
       <div class="form-group">
           <label for="phone">Phone</label>
+          {{ form.errors.phone }}
           {{ form.phone(class_ = 'form-control', placeholder='xxx-xxx-xxxx', autofocus = true) }}
         </div>
       <div class="form-group">
         <label for="genres">Genres</label>
+        {{ form.errors.genres }}
         <small>Ctrl+Click to select multiple</small>
         {{ form.genres(class_ = 'form-control', placeholder='Genres, separated by commas', autofocus = true) }}
       </div>
