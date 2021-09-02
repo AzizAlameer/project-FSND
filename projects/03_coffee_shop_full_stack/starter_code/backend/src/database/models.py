@@ -40,7 +40,6 @@ def db_drop_and_create_all():
     )
 
 
-drink.insert()
 # ROUTES
 
 '''
